@@ -1,9 +1,13 @@
-require_relative "../lib/length.rb"
+require_relative "../lib/time_unit.rb"
 
-describe "Length" do
-  it "should be instantiated with 'name', 'sym', & 'multiplier' arguments" do
-    unit = Length.new("meter", "m", 1.0)
-    expect(unit.instance_variables).to include(:@name, :@sym, :@multiplier)
+describe "Time_Unit" do
+  it "requires a 'sym', and a 'multiplier' property to instantiate" do
+    unit = Time_Unit.new("s", 1.0)
+    sym = unit.instance_variable_get(:@sym)
+    multiplier = unit.instance_variable_get(:@multiplier)
+
+    expect(sym).to eq("s")
+    expect(multiplier).to eq(1.0)
   end
 
   # describe "@system" do

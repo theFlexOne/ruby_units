@@ -1,9 +1,9 @@
-class Unit
+class Unit_Stem
   attr_reader :name, :sym, :multiplier
 
   @@master_units_list = []
 
-  def initialize(name, sym, multiplier, unit = nil)
+  def initialize(sym, multiplier, name = "undefined", unit = nil)
     multiplier = multiplier.to_f # throw error if multiplier.class is not a "float"
 
     @name = name

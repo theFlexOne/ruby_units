@@ -1,22 +1,24 @@
-class measurement
-  attr_reader :value
+require "pry"
+require_relative "./unit_stem.rb"
+require_relative "./modules/measurement_math.rb"
+require_relative "./modules/measurement_conversions.rb"
 
-  def initialize(value)
-    @value = value
+class Measurement
+  # include Unit_Math
+  # include Unit_Conversion
+
+  attr_reader :init_value, :init_unit, :value, :unit, :unit_type
+
+  def initialize(val, unit, unit_type = nil)
+    master = Unit_Stem.get_master_units_list
+
+    @val = val
+    @unit = unit
+    @unit_type = unit_type
+    @unit_list = []
+
+    binding.pry
   end
 end
 
-
-# UNITS_LIST = [
-#   { symbol: "mm", multiplier: 1000, name: "millimeter", unit_type: "length", system: "metric" },
-#   { symbol: "cm", multiplier: 100, name: "centimeter", unit_type: "length", system: "metric" },
-#   { symbol: "m", multiplier: 1, name: "meter", unit_type: "length", system: "metric" },
-#   { symbol: "km", multiplier: 0.001, name: "kilometer", unit_type: "length", system: "metric" },
-#   { symbol: "in", multiplier: 39.3701, name: "inches", unit_type: "length", system: "imperial" },
-#   { symbol: "ft", multiplier: 3.28084, name: "feet", unit_type: "length", system: "imperial" },
-#   { symbol: "yd", multiplier: 1.09361, name: "yard", unit_type: "length", system: "imperial" },
-#   { symbol: "mi", multiplier: 0.000621371, name: "miles", unit_type: "length", system: "imperial" },
-#   { symbol: "au", multiplier: 6.68459e-12, name: "astronomical unit", unit_type: "length", system: nil },
-# # au
-# # ly
-# ]
+Measurement.new(1, "m", "length")

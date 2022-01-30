@@ -1,5 +1,5 @@
 require "pry"
-require_relative "./unit.rb"
+require_relative "./unit_stem.rb"
 
 LENGTH_UNITS = [
   { symbol: "mm", multiplier: 0.001, name: "millimeter", unit_type: "length", system: "metric" },
@@ -13,23 +13,34 @@ LENGTH_UNITS = [
   { symbol: "au", multiplier: 1.496e+11, name: "astronomical unit", unit_type: "length", system: "other" },
 ]
 
-class Length < Unit
-  attr_reader :system
+class Length_Unit < Unit_Stem
+  attr_reader :system, :unit_type
   @@unit_list = []
 
-  def initialize(name, sym, multiplier, system = "undefined")
-    super(name, sym, multiplier, self)
+  def initialize(sym, multiplier, name = "undefined", system = "undefined")
+    # binding.pry
+    super(sym, multiplier, name, self)
+    @unit_type = "length"
     @system = system
     @@unit_list << self
+    @@base_unit = self if multiplier == 1.0
   end
 
   def self.unit_list
     @@unit_list
   end
+
+  def base_unit
+    @@base_unit || "undefined"
+  end
+
+  def self.base_unit
+    @@base_unit
+  end
 end
 
-unit_objects = LENGTH_UNITS.map do |unit|
-  Length.new(unit[:name], unit[:symbol], unit[:multiplier], (unit[:system] || "undefined"))
+length_units = LENGTH_UNITS.map do |unit|
+  Length_Unit.new(unit[:symbol], unit[:multiplier], unit[:name], (unit[:system] || "undefined"))
 end
 
 binding.pry
