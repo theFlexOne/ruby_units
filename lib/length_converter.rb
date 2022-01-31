@@ -31,6 +31,7 @@ class Length_Converter
     BASE_UNIT_SYMBOL
   end
 
+  # I'm going to remove unused code and only expose the absolutely neccessary code
   def self.base_unit=(unit)
     throw "base_unit can not be changed, for now..." # base_unit can never be changed, for now...
   end
@@ -39,7 +40,7 @@ class Length_Converter
     puts "Formula = BASE_UNIT_VALUE * base_value"
   end
 
-  # useful class helper method
+  # useful class helper method - could maybe be private or protected
   def self.get_multiplier(sym)
     unit = self::UNIT_LIST.find { |u| u[:symbol] == sym }
     unit[:multiplier]
@@ -50,7 +51,7 @@ class Length_Converter
     old_multiplier = self.get_multiplier(old_unit)
     new_multiplier = self.get_multiplier(new_unit)
     # binding.pry
-    new_value = (old_value * (1.0 / old_multiplier) * new_multiplier)
+    new_value = (old_value * (1.0 / old_multiplier) * new_multiplier).round(4)
   end
 
   def self.add_values(val1, unit1, val2, unit2 = nil, use_unit2 = false)
@@ -61,9 +62,25 @@ class Length_Converter
     converted_sum = Length_Converter.convert(base_sum, BASE_UNIT_SYMBOL, (use_unit2 ? unit2 : unit1)).round(4)
   end
 
-  def convert(unit)
-    @value = Length_Converter.convert(@value, @unit, unit)
-    @unit = unit
+  # this is the most recent thing I wrote. I'm proud of this b/c I'm adding to instances of this class, effectively using them as if they were primitives.
+  def self.add_measurements(meas1, meas2)
+    if (meas1.class != Length_Converter || meas2.class != Length_Converter)
+      return throw("Invalid arguments. Must pass in two instances of Length_Converter with the same @unit_type")
+    end
+    new_val = self.add_values(meas1.value, meas1.unit, meas2.value, meas2.unit)
+    Length_Converter.new(new_val, meas1.unit)
+  end
+
+  def convert_to(sym)
+    unit = sym
+    value = Length_Converter.convert(@value, @unit, unit)
+    Length_Converter.new(value, unit)
+  end
+
+  def convert_to!(sym)
+    unit = sym
+    @value, @unit = Length_Converter.convert(@value, @unit, unit)
+    self
   end
 
   # useful instance helper method
@@ -71,7 +88,7 @@ class Length_Converter
     Length_Converter.get_multiplier(@unit)
   end
 
-  # setter that sets @unit & sets @value based on new @unit
+  # setter that sets @unit & changes @value based on new @unit
   def unit=(sym)
     @value = Length_Converter.convert(@value, @unit, sym)
     @unit = sym
@@ -95,12 +112,13 @@ class Length_Converter
     Length_Converter.new(new_value, new_unit)
   end
 
-  # adds length - mutates current instance
+  # adds length - mutates current instance and returns self
   def add!(value, unit = BASE_UNIT_SYMBOL)
     converted_input = Length_Converter.convert(value, unit, @unit)
     new_value = @value + converted_input
     push_to_base_value_history(new_value, @unit)
     @value = new_value
+    self
   end
 
   # subtracts length - return a new Length_Converter instance
@@ -113,12 +131,13 @@ class Length_Converter
     Length_Converter.new(new_value, new_unit)
   end
 
-  # subtracts length - mutates current instance
+  # subtracts length - mutates current instance and returns self
   def subtract!(value, unit)
     converted_input = Length_Converter.convert(value, unit, @unit)
     new_value = @value - converted_input
     push_to_base_value_history(new_value, @unit)
     @value = new_value
+    self
   end
 
   # for display purposes

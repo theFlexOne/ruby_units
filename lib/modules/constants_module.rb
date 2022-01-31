@@ -8,6 +8,7 @@ module Constants
     { symbol: "ft", multiplier: 3.28084, name: "feet", measurement: "length", system: "imperial" },
     { symbol: "yd", multiplier: 1.09361, name: "yard", measurement: "length", system: "imperial" },
     { symbol: "mi", multiplier: 0.000621371, name: "miles", measurement: "length", system: "imperial" },
+    { symbol: "au", multiplier: 6.68459e-12, name: "astronomical unit", measurement: "length", system: nil },
   ]
 
   BASE_UNIT_SYMBOL = "m"
