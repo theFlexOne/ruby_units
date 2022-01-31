@@ -11,6 +11,6 @@ module Constants
     { symbol: "au", multiplier: 6.68459e-12, name: "astronomical unit", measurement: "length", system: nil },
   ]
 
-  BASE_UNIT_SYMBOL = "m"
-  BASE_UNIT_VALUE = 1
+  # BASE_UNIT_SYMBOL = "m"
+  # BASE_UNIT_VALUE = 1
 end
