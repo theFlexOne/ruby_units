@@ -2,9 +2,9 @@
 
 ## Description
 
-A "measurement" class, `Measurement`, that allows a user to work with units of measurement easier.
+  - A "measurement" class, `Measurement`, that allows a user to work with units of measurement easier.
 
-Also, a project for me to learn/practice/refine my OOP knowledge, through Ruby.
+  - Also, a project for me to learn/practice/refine my OOP knowledge, through Ruby.
 
 ## Triggers
 
