@@ -1,7 +1,7 @@
 require "pry"
 require_relative "../lib/unit_stem.rb"
 
-describe "Unit_Stem" do
+describe Unit_Stem do
   unit = Unit_Stem.new("m", 1.0)
   sym = unit.instance_variable_get(:@sym)
   multiplier = unit.instance_variable_get(:@multiplier)
