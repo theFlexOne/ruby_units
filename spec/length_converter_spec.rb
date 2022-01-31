@@ -1,4 +1,4 @@
-require_relative "../lib/converter.rb"
+require_relative "../lib/length_converter.rb"
 require "pry"
 
 # include Constants
@@ -22,7 +22,6 @@ describe "Init_Value_And_Unit" do
     c = TEST_CONVERTER_1
     expect(c.init_value).to eq(12)
     expect(c.init_unit).to eq("in")
-    binding.pry
   end
 end
 
@@ -31,7 +30,6 @@ describe "Base_Value_History" do
     c = TEST_CONVERTER_1
     expect(c.base_value_history.length).to eq(1)
     expect(c.base_value_history[0]).to eq(0.30479983540808886)
-    binding.pry
   end
 end
 
